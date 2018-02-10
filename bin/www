@@ -7,13 +7,13 @@
 var app = require('../server/app');
 var debug = require('debug')('balancer-diploma:server');
 var http = require('http');
-var config = require('../server/config');
+var сonstants = require('../common/constants');
 
 /**
  * Get port from environment and store in Express.
  */
 
-let port = normalizePort(config.get('port'));
+let port = normalizePort(сonstants.PORT);
 
 app.set('port', port);
 

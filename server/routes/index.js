@@ -1,7 +1,9 @@
 
 const path = require('path');
 
-module.exports = function(app, router) {
-	require(path.join(__dirname, 'rest', 'base.js'))(app, router);
-	require(path.join(__dirname, 'rest', 'users.js'))(app, router);
+module.exports = function(app) {
+	let baseDir = path.join(__dirname, 'rest');
+
+	require(path.join(baseDir, 'base.js'))(app);
+	require(path.join(baseDir, 'users.js'))(app);
 }

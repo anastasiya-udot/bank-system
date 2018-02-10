@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const router = express.Router();
 const mongoose = require('./libs/mongoose')
 
 require('./middlewares/base')(app);
@@ -8,9 +7,12 @@ require('./middlewares/base')(app);
 global.models = require('./models')(mongoose);
 global.serviceLocator = require('./services/serviceLocator');
 
-require('./routes')(app, router);
+require('./routes')(app);
 
-app.use('/public', express.static(__dirname + '../public'));
+app.use('/views', express.static(__dirname + '/views'));
+app.use('/server/views', express.static(__dirname + '/views'));
+app.use('/node_modules', express.static(__dirname + '/../node_modules'));
+app.use('/common', express.static(__dirname + '/../common'));
 
 app.use((req, res, next) => {
 	const err = new Error('Not Found');

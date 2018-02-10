@@ -1,7 +1,7 @@
 let mongoose = require('mongoose');
-let config = require('../config');
+let constants = require('../../common/constants');
 
 mongoose.Promise = global.Promise;
-mongoose.connect(config.get('mongoose:uri'));
+mongoose.connect(constants.MONGOOSE.URL);
 
 module.exports = mongoose;

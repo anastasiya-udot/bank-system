@@ -4,11 +4,11 @@ class ServiceLocator {
     constructor() {
         this._services = {};
 
-        this._services[UserService.serviceName] = UserService;
+        this._services[UserService.serviceName] = new UserService();
     }
 
     get(name) {
-        let service = his._services['name'];
+        let service = this._services[name];
 
         if (!service) {
             throw Error(`No service ${name} found`);
