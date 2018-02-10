@@ -4,6 +4,10 @@ const router = express.Router();
 const mongoose = require('./libs/mongoose')
 
 require('./middlewares/base')(app);
+
+global.models = require('./models')(mongoose);
+global.serviceLocator = require('./services/serviceLocator');
+
 require('./routes')(app, router);
 
 app.use('/public', express.static(__dirname + '../public'));
