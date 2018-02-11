@@ -10,7 +10,7 @@ module.exports = function(app) {
 
             users = [
                { id: 1,
-                name: 'la'
+                name: 'lalalalalla'
                }
             ];
 

@@ -1,25 +1,25 @@
-import constants from '../../../common/constants';
+import config from '../../../common/config';
 
 module.exports = {
     data() {
         return {
             users: [],
-            url: `${constants.TYPE}://${constants.HOST}:${constants.PORT}/users`
+            url: `${config.TYPE}://${config.HOST}:${config.PORT}/users`
         }
     },
     methods: {
         getAllUsers() {
-            this.$http.get(this.url).then(
-                response => {
-                    this.users = response.body;
-                },
-                response => {
-                    console.log(response);
-                }
-            )
+            return this.$http.get(this.url);
         }
     },
     created() {
-        this.getAllUsers();
+        this.getAllUsers().then(
+            response => {
+                this.users = response.body;
+            },
+            err => {
+                console.log(err);
+            }
+        )
     }
 }

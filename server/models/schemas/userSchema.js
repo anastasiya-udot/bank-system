@@ -1,92 +1,27 @@
 let dictionarySchema = require('./dictionarySchema');
+let constants = require('../../../common/constants');
+const _ = require('lodash');
 
 module.exports = function(mongoose) {
     let Dictionary = dictionarySchema(mongoose);
+    let schema = _.mapValues(constants.USER_SCHEMA, (value, key) => {
+        let type;
 
-    return new mongoose.Schema({
-        name: {
-            type: String,
-            unique: false,
-            required: true
-        },
-        surname: {
-            type: String,
-            unique: false,
-            required: true
-        },
-        patronymic: {
-            type: String,
-            required: true
-        },
-        email: {
-            type: String,
-            unique: true,
-            required: true
-        },
-        birthdate: {
-            type: Date,
-            unique: false,
-            required: true
-        },
-        serialType: {
-            type: String,
-            unique: false,
-            required: true
-        },
-        serialNumber: {
-            type: String,
-            unique: false,
-            required: true
-        },
-        idNumber: {
-            type: String,
-            unique: false,
-            required: true
-        },
-        birthplace: {
-            type: String,
-            unique: false,
-            required: true
-        },
-        actualResidenceCity: Dictionary,
-        actualResidenceAddress: {
-            type: String,
-            unique: false,
-            required: true
-        },
-        homePhoneNumber: String,
-        mobilePhoneNumber: String,
-        maritalStatus: {
-            type: Dictionary,
-            unique: false,
-            required: true
-        },
-        workingPlace: String,
-        position: String,
-        nationality: {
-            type: Dictionary,
-            required: true,
-            unique: false
-        },
-        disability: {
-            type: Dictionary,
-            required: true,
-            unique: false
-        },
-        pensioner: {
-            type: Boolean,
-            required: true,
-            unique: false
-        },
-        monthlyIncome: {
-            type: Number,
-            required: false,
-            unique: false
-        },
-        warBound: {
-            type: Boolean,
-            reuired: true,
-            unique: false
+        switch (value.type) {
+            case constants.USER_SCHEMA_TYPES.STRING: type = String; break;
+            case constants.USER_SCHEMA_TYPES.BOOLEAN: type = Boolean; break;
+            case constants.USER_SCHEMA_TYPES.NUMBER: type = Number; break;
+            case constants.USER_SCHEMA_TYPES.DICTIONARY: type = Dictionary; break;
+            case constants.USER_SCHEMA_TYPES.DATE: type = Date; break;
+            default: type = String;
         }
+
+        return {
+            type: type,
+            required: value.required,
+            unique: value.unique
+        };
     });
+
+    return new mongoose.Schema(schema);
 };
