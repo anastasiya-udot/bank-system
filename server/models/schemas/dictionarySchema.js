@@ -3,7 +3,7 @@ module.exports = function(mongoose) {
         name: {
             type: String,
             required: true,
-            unique: true
+            unique: false
         }
     });
 };

@@ -3,7 +3,8 @@ const cities = require('../sources/cities');
 const maritalStatuses = require('../sources/maritalStatuses');
 const disabilityTypes = require('../sources/disabilityTypes');
 
-let validation = require('./validation')
+let validation = require('./validation');
+let formatters = require('./formatters');
 
 let constants = {
     USER_SCHEMA_TYPES: {
@@ -18,22 +19,27 @@ let constants = {
 constants.COLLECTIONS = {
     NATIONALITIES: {
         NAME: 'nationalities',
-        ITEMS: nationalities
+        ITEMS: nationalities,
+        MODEL: 'Nationality'
     },
     
     CITIES: {
         NAME: 'cities',
-        ITEMS: cities
+        ITEMS: cities,
+        MODEL: 'City'
     },
     
     MARITAL_STATUSES: {
         NAME: 'maritalStatuses',
-        ITEMS: maritalStatuses
+        ITEMS: maritalStatuses,
+        MODEL: 'MaritalStatus'
     },
 
     DISABILITY_TYPES: {
         NAME: 'disabilityTypes',
-        ITEMS: disabilityTypes
+        ITEMS: disabilityTypes,
+        MODEL: 'Disability'
+        
     }
 };
 
@@ -57,31 +63,42 @@ constants.USER_SCHEMA = {
         unique: false,
         validation: validation.name
     },
-    email: {
-        type: constants.USER_SCHEMA_TYPES.STRING,
-        unique: true,
-        required: true,
-        validation: validation.email
-    },
     birthdate: {
         type: constants.USER_SCHEMA_TYPES.DATE,
         unique: false,
-        required: true
+        default: (new Date(2016, 9,  16)).valueOf(),
+        required: true,
+        formatter: formatters.date
     },
     serialType: {
         type: constants.USER_SCHEMA_TYPES.STRING,
         unique: false,
-        required: true
+        required: true,
+        validation: validation.serialType
     },
     serialNumber: {
         type: constants.USER_SCHEMA_TYPES.STRING,
-        unique: false,
-        required: true
+        unique: true,
+        required: true,
+        validation: validation.serialNumber
     },
     idNumber: {
         type: constants.USER_SCHEMA_TYPES.STRING,
+        unique: true,
+        required: true,
+        validation: validation.idNumber
+    },
+    passportIssuedBy: {
+        type: constants.USER_SCHEMA_TYPES.STRING,
         unique: false,
         required: true
+    },
+    dateOfIssue: {
+        type: constants.USER_SCHEMA_TYPES.DATE,
+        default: (new Date(2016, 9,  16)).valueOf(),
+        unique: false,
+        required: true,
+        formatter: formatters.date
     },
     birthplace: {
         type: constants.USER_SCHEMA_TYPES.STRING,
@@ -112,6 +129,12 @@ constants.USER_SCHEMA = {
         required: false,
         validation: validation.phone
     },
+    email: {
+        type: constants.USER_SCHEMA_TYPES.STRING,
+        unique: true,
+        required: true,
+        validation: validation.email
+    },
     maritalStatus: {
         type: constants.USER_SCHEMA_TYPES.DICTIONARY,
         unique: false,
@@ -133,7 +156,7 @@ constants.USER_SCHEMA = {
         type: constants.USER_SCHEMA_TYPES.DICTIONARY,
         required: true,
         unique: false,
-        default: constants.COLLECTIONS.NATIONALITIES.ITEMS[0],
+        default: constants.COLLECTIONS.NATIONALITIES.ITEMS[18],
         dictionaryType: constants.COLLECTIONS.NATIONALITIES.NAME
     },
     disability: {
@@ -152,7 +175,10 @@ constants.USER_SCHEMA = {
     monthlyIncome: {
         type: constants.USER_SCHEMA_TYPES.NUMBER,
         required: false,
-        unique: false
+        unique: false,
+        default: 10,
+        min: 0,
+        validation: validation.number
     },
     warBound: {
         type: constants.USER_SCHEMA_TYPES.BOOLEAN,

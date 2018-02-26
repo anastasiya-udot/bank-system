@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
-const mongoose = require('./libs/mongoose')
+const mongoose = require('./libs/mongoose');
+
+let ServerError = require('./utils/serverError');
 
 require('./middlewares/base')(app);
 
@@ -16,7 +18,7 @@ app.use('/common', express.static(__dirname + '/../common'));
 app.use('/sources', express.static(__dirname + '/../sources'));
 
 app.use((req, res, next) => {
-	const err = new Error('Not Found');
+	const err = new ServerError('Not Found');
 
 	err.status = 404;
 	next(err);
