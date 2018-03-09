@@ -1,10 +1,11 @@
-let dictionarySchema = require('./dictionarySchema');
-let constants = require('../../../common/constants');
+const dictionarySchema = require('./dictionarySchema');
+const constants = require('../../../common/constants');
+const schemas = require('../../../common/schemas');
 const _ = require('lodash');
 
 module.exports = function(mongoose) {
     let Dictionary = dictionarySchema(mongoose);
-    let schema = _.mapValues(constants.USER_SCHEMA, (value, key) => {
+    let schema = _.mapValues(schemas.USER_SCHEMA, (value, key) => {
         let type;
 
         switch (value.type) {

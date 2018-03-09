@@ -3,24 +3,24 @@ import config from '../../../common/config';
 module.exports = {
     data() {
         return {
-            url: `${config.TYPE}://${config.HOST}:${config.PORT}/users`
+            userUrl: `${config.TYPE}://${config.HOST}:${config.PORT}/users`
         }
     },
     methods: {
         getAllUsers() {
-            return this.$http.get(this.url);
+            return this.$http.get(this.userUrl);
         },
 
         createUser(data) {
-            return this.$http.post(this.url, data);
+            return this.$http.post(this.userUrl, data);
         },
 
         updateUser(user, data) {
-            return this.$http.put(`${this.url}/${user.id}`, data);
+            return this.$http.put(`${this.userUrl}/${user.id}`, data);
         },
 
         removeUser(user) {
-            return this.$http.delete(`${this.url}/${user.id}`);
+            return this.$http.delete(`${this.userUrl}/${user.id}`);
         }
     }
 }

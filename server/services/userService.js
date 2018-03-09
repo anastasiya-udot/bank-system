@@ -1,11 +1,12 @@
 let BaseService = require('./baseService');
 const constants = require('../../common/constants');
+const schemas = require('../../common/schemas');
 const _ = require('lodash');
 const async = require('async');
 
 let ServerError = require('../utils/serverError');
 
-const userSchema = constants.USER_SCHEMA;
+const userSchema = schemas.USER_SCHEMA;
 const userSchemaTypes = constants.USER_SCHEMA_TYPES;
 
 class UserService extends BaseService {

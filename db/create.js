@@ -5,14 +5,19 @@ const nationalities = require('../sources/nationalities');
 const cities = require('../sources/cities');
 const disabilityTypes = require('../sources/disabilityTypes');
 const maritalStatuses = require('../sources/maritalStatuses');
+const depositPrograms = require('../sources/depositPrograms');
+const creditPrograms = require('../sources/creditPrograms');
+const constants = require('../common/constants');
 
 async.series([
     open,
-   //createNationalities,
-   //createDisabilityTypes,
-   //createMaritalStatuses,
-   //createCities
-], () => {
+    createDepositPrograms,
+    createCreditPrograms,
+    createBDF
+], (err) => {
+    if (err) {
+        throw err;
+    }
     console.log(arguments);
     mongoose.disconnect();
 });
@@ -59,4 +64,34 @@ function createMaritalStatuses(callback) {
 
         status.save(callback);
     }, callback);
+}
+
+function createDepositPrograms(callback) {
+    async.each(depositPrograms , function(program, callback){
+        let depositProgram = new Models.DepositProgram(program);
+
+        depositProgram.save(callback);
+    }, callback);
+}
+
+function createCreditPrograms(callback) {
+    async.each(creditPrograms, function(program, callback){
+        let creditProgram = new Models.CreditProgram(program);
+
+        creditProgram.save(callback);
+    }, callback);
+}
+
+function createBDF(callback) {
+    let bdfAccount = new Models.BdfAccount({
+        number: `${constants.ACCOUNT_CODES.BDF}11111111111`,
+        code: constants.ACCOUNT_CODES.BDF,
+        name: 'Bank development fond',
+        amount: 1000000000,
+        currency: 'BYR'
+    });
+
+    bdfAccount.save(err => {
+        console.log(err);
+    });
 }

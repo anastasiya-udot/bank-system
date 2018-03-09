@@ -6,7 +6,7 @@ class BaseService {
     getAll(next) {
         this.Model.find((err, items) => {
             if (err) {
-                next(new ServerError(`${this._serviceName}: ${err.message})`, 500));
+                next(new ServerError(`${this.serviceName}: ${err.message})`, 500));
                 return;
             }
 
@@ -64,15 +64,13 @@ class BaseService {
     getBy(attrs, next) {
         this.Model.find(attrs, (err, items) => {
             if (err) {
-                next(new ServerError(`${this._serviceName}: ${err.message})`, 500));
+                next(new ServerError(`${this.serviceName}: ${err.message})`, 500));
                 return;
             }
 
             next(null, items);
         })
     }
-
-
 }
 
 module.exports = BaseService;

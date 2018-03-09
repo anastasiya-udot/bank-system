@@ -12,7 +12,7 @@ class DictionaryService extends BaseService {
         this.models = {};
 
         _.each(collections, collection => {
-            this.models[collection.NAME] = global.models[collection.MODEL];
+            this.models[collection.MONGOOSE_COLLECTION] = global.models[collection.MONGOOSE_MODEL];
         });
     }
 

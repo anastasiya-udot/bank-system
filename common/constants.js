@@ -2,9 +2,7 @@ const nationalities = require('../sources/nationalities');
 const cities = require('../sources/cities');
 const maritalStatuses = require('../sources/maritalStatuses');
 const disabilityTypes = require('../sources/disabilityTypes');
-
-let validation = require('./validation');
-let formatters = require('./formatters');
+const currencies = require('../sources/currencies');
 
 let constants = {
     USER_SCHEMA_TYPES: {
@@ -13,178 +11,56 @@ let constants = {
         DICTIONARY: 'Dictionary',
         BOOLEAN: 'Boolean',
         NUMBER: 'Number'
+    },
+    PROGRAM_SCHEMA_TYPES: {
+        STRING: 'String',
+        NUMBER: 'Number',
+        BOOLEAN: 'Boolean'
+    },
+    ACCOUNT_ENTRY_TYPES: {
+        DEPOSIT: 0,
+        CREDIT: 1
+    },
+    AGREEMENT_SCHEMA_TYPES: {
+        STRING: 'String',
+        NUMBER: 'Number',
+        DATE: 'Date'
+    },
+    ACCOUNT_TYPES: {
+        BDF: 0,
+        USER: 1,
+        INTEREST: 2
+    },
+    ACCOUNT_CODES: {
+        USER: 3014,
+        BDF: 7327,
+        INTEREST: 2400
     }
 };
 
 constants.COLLECTIONS = {
     NATIONALITIES: {
-        NAME: 'nationalities',
+        MONGOOSE_COLLECTION: 'nationalities',
         ITEMS: nationalities,
-        MODEL: 'Nationality'
+        MONGOOSE_MODEL: 'Nationality'
     },
     
     CITIES: {
-        NAME: 'cities',
+        MONGOOSE_COLLECTION: 'cities',
         ITEMS: cities,
-        MODEL: 'City'
+        MONGOOSE_MODEL: 'City'
     },
     
     MARITAL_STATUSES: {
-        NAME: 'maritalStatuses',
+        MONGOOSE_COLLECTION: 'maritalStatuses',
         ITEMS: maritalStatuses,
-        MODEL: 'MaritalStatus'
+        MONGOOSE_MODEL: 'MaritalStatus'
     },
 
     DISABILITY_TYPES: {
-        NAME: 'disabilityTypes',
+        MONGOOSE_COLLECTION: 'disabilityTypes',
         ITEMS: disabilityTypes,
-        MODEL: 'Disability'
-        
-    }
-};
-
-constants.USER_SCHEMA = {
-    name: {
-        type: constants.USER_SCHEMA_TYPES.STRING,
-        unique: false,
-        required: true,
-        validation: validation.name
-    },
-    surname: {
-        type: constants.USER_SCHEMA_TYPES.STRING,
-        unique: false,
-        required: true,
-        sortable: true,
-        validation: validation.name
-    },
-    patronymic: {
-        type: constants.USER_SCHEMA_TYPES.STRING,
-        required: true,
-        unique: false,
-        validation: validation.name
-    },
-    birthdate: {
-        type: constants.USER_SCHEMA_TYPES.DATE,
-        unique: false,
-        default: (new Date(2016, 9,  16)).valueOf(),
-        required: true,
-        formatter: formatters.date
-    },
-    serialType: {
-        type: constants.USER_SCHEMA_TYPES.STRING,
-        unique: false,
-        required: true,
-        validation: validation.serialType
-    },
-    serialNumber: {
-        type: constants.USER_SCHEMA_TYPES.STRING,
-        unique: true,
-        required: true,
-        validation: validation.serialNumber
-    },
-    idNumber: {
-        type: constants.USER_SCHEMA_TYPES.STRING,
-        unique: true,
-        required: true,
-        validation: validation.idNumber
-    },
-    passportIssuedBy: {
-        type: constants.USER_SCHEMA_TYPES.STRING,
-        unique: false,
-        required: true
-    },
-    dateOfIssue: {
-        type: constants.USER_SCHEMA_TYPES.DATE,
-        default: (new Date(2016, 9,  16)).valueOf(),
-        unique: false,
-        required: true,
-        formatter: formatters.date
-    },
-    birthplace: {
-        type: constants.USER_SCHEMA_TYPES.STRING,
-        unique: false,
-        required: true
-    },
-    actualResidenceCity: {
-        type: constants.USER_SCHEMA_TYPES.DICTIONARY,
-        required: false,
-        unique: false,
-        default: constants.COLLECTIONS.CITIES.ITEMS[0],
-        dictionaryType: constants.COLLECTIONS.CITIES.NAME
-    },
-    actualResidenceAddress: {
-        type: constants.USER_SCHEMA_TYPES.STRING,
-        unique: false,
-        required: true
-    },
-    homePhoneNumber: {
-        type: constants.USER_SCHEMA_TYPES.STRING,
-        unique: false,
-        required: false,
-        validation: validation.phone
-    },
-    mobilePhoneNumber: {
-        type: constants.USER_SCHEMA_TYPES.STRING,
-        unique: false,
-        required: false,
-        validation: validation.phone
-    },
-    email: {
-        type: constants.USER_SCHEMA_TYPES.STRING,
-        unique: true,
-        required: true,
-        validation: validation.email
-    },
-    maritalStatus: {
-        type: constants.USER_SCHEMA_TYPES.DICTIONARY,
-        unique: false,
-        required: true,
-        default: constants.COLLECTIONS.MARITAL_STATUSES.ITEMS[0],
-        dictionaryType: constants.COLLECTIONS.MARITAL_STATUSES.NAME
-    },
-    workingPlace: {
-        type: constants.USER_SCHEMA_TYPES.STRING,
-        unique: false,
-        required: false
-    },
-    position: {
-        type: constants.USER_SCHEMA_TYPES.STRING,
-        unique: false,
-        required: false
-    },
-    nationality: {
-        type: constants.USER_SCHEMA_TYPES.DICTIONARY,
-        required: true,
-        unique: false,
-        default: constants.COLLECTIONS.NATIONALITIES.ITEMS[18],
-        dictionaryType: constants.COLLECTIONS.NATIONALITIES.NAME
-    },
-    disability: {
-        type: constants.USER_SCHEMA_TYPES.DICTIONARY,
-        required: true,
-        unique: false,
-        default: constants.COLLECTIONS.DISABILITY_TYPES.ITEMS[0],
-        dictionaryType: constants.COLLECTIONS.DISABILITY_TYPES.NAME
-    },
-    pensioner: {
-        type: constants.USER_SCHEMA_TYPES.BOOLEAN,
-        required: true,
-        unique: false,
-        default: false
-    },
-    monthlyIncome: {
-        type: constants.USER_SCHEMA_TYPES.NUMBER,
-        required: false,
-        unique: false,
-        default: 10,
-        min: 0,
-        validation: validation.number
-    },
-    warBound: {
-        type: constants.USER_SCHEMA_TYPES.BOOLEAN,
-        reuired: true,
-        unique: false,
-        default: false
+        MONGOOSE_MODEL: 'Disability'    
     }
 };
 
